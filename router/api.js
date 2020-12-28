@@ -8,9 +8,13 @@ router.post('/send', (req, res) => {
   const serviceId = process.env.SERVICE_ID;
   const accessKey = process.env.ACCESS_KEY_ID;
   const url = `https://sens.apigw.ntruss.com/sms/v2/services/${serviceId}/messages`;
-  const StringtoSign = `POST ${url}\n${timeStamp}\n${accessKey}`;
+  const url2 = `/sms/v2/services/${serviceId}/messages`;
+  const StringtoSign = `POST ${url2}\n${timeStamp}\n${accessKey}`;
   console.log(StringtoSign);
-  const signature = crypto.createHmac('sha256', StringtoSign).digest('base64');
+  const signature = crypto
+    .createHmac('sha256')
+    .update(StringtoSign)
+    .digest('base64');
 
   const headers = {
     'Contenc-type': 'application/json; charset=utf-8',
@@ -31,11 +35,17 @@ router.post('/send', (req, res) => {
       },
     ],
   };
-  axios.defaults.headers.post = null;
+  // axios.defaults.headers.post = null;
   axios
     .post(url, data, { headers })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .then((res) => {
+      console.log(res);
+      res.status(200).json({ success: true });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({ success: false });
+    });
 });
 
 module.exports = router;
