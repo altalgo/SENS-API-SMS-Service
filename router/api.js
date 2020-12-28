@@ -11,24 +11,15 @@ router.post('/send', (req, res) => {
   const url = `https://sens.apigw.ntruss.com/sms/v2/services/${serviceId}/messages`;
   const url2 = `/sms/v2/services/${serviceId}/messages`;
   const StringtoSign = `POST ${url2}\n${timeStamp}\n${accessKey}`;
-  console.log(StringtoSign);
-  const signature = crypto
-    .createHmac('sha256')
-    .update(StringtoSign)
-    .digest('base64');
-
-  const headers = {
-    'Contenc-type': 'application/json; charset=utf-8',
-    'x-ncp-iam-access-key': accessKey,  
-    'x-ncp-apigw-timestamp': timeStamp,
-    'x-ncp-apigw-signature-v2': signature,
-  };
+  const signature = crypto.createHmac('sha256', StringtoSign).digest('base64');
+  console.log(signature);
+  
   const data = {
-    type: 'SMS',
-    countryCode: '82',
-    from: '01023250564',
-    content: `안녕하세요`,
-    messages: [
+    ['type']: 'SMS',
+    ['countryCode']: '82',
+    ['from']: '01023250564',
+    ['content']: `안녕하세요`,
+    ['messages']: [
       {
         to: `01023250564`,
         subject: 'abcd',
@@ -36,16 +27,24 @@ router.post('/send', (req, res) => {
       },
     ],
   };
-  // axios.defaults.headers.post = null;
-  axios
-    .post(url, data, { headers })
+
+  axios({
+    method: 'POST',
+    url,
+    headers: {
+      'x-ncp-iam-access-key': accessKey,
+      'x-ncp-apigw-timestamp': timeStamp,
+      'x-ncp-apigw-signature-v2': signature,
+    },
+    data,
+  })
     .then((res) => {
       console.log(res);
-      res.status(200).json({ success: true });
+      res.json({ succes: true });
     })
     .catch((err) => {
       console.log(err);
-      res.json({ success: false });
+      res.json({ succes: false });
     });
 });
 
