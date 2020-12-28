@@ -9,7 +9,8 @@ router.post('/send', (req, res) => {
   const accessKey = process.env.ACCESS_KEY_ID;
   const url = `https://sens.apigw.ntruss.com/sms/v2/services/${serviceId}/messages`;
   const StringtoSign = `POST ${url}\n${timeStamp}\n${accessKey}`;
-  const signature = crypto.createHmac('sha256', StringtoSign);
+  console.log(StringtoSign);
+  const signature = crypto.createHmac('sha256', StringtoSign).digest('base64');
 
   const headers = {
     'Contenc-type': 'application/json; charset=utf-8',
