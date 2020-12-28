@@ -8,18 +8,20 @@ router.post('/send', (req, res) => {
   const timeStamp = Date.now().toString();
   const serviceId = process.env.SERVICE_ID;
   const accessKey = process.env.ACCESS_KEY_ID;
+  const secretKey = process.env.ACCESS_SECRET_KEY;
   const url = `https://sens.apigw.ntruss.com/sms/v2/services/${serviceId}/messages`;
   const url2 = `/sms/v2/services/${serviceId}/messages`;
   const StringtoSign = `POST ${url2}\n${timeStamp}\n${accessKey}`;
-  const signature = crypto.createHmac('sha256', StringtoSign).digest('base64');
-  console.log(signature);
-  
+  const signature = crypto
+    .createHmac('sha256', secretKey)
+    .update(StringtoSign)
+    .digest('base64');
   const data = {
-    ['type']: 'SMS',
-    ['countryCode']: '82',
-    ['from']: '01023250564',
-    ['content']: `안녕하세요`,
-    ['messages']: [
+    type: 'SMS',
+    countryCode: '82',
+    from: '01023250564',
+    content: `안녕하세요`,
+    messages: [
       {
         to: `01023250564`,
         subject: 'abcd',
