@@ -7,7 +7,7 @@ const apiRouter = require('./router/api');
 dotenv.config();
 
 const app = express();
-app.set('port', process.env.PORT || 4000);
+app.set('port', 2323);
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
