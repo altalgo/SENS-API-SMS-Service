@@ -14,7 +14,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', apiRouter);
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 app.use('/views', static(path.join(__dirname, '/views')));
@@ -28,8 +27,19 @@ app.use('/login', (req, res) => {
 })
 app.post('/chkuser', (req, res) => {
   //유저가 리스트에 있으면
+  console.log(req.body);
   res.redirect('/main')
 })
+// 들어오면 일단 여기부터
+app.get('/', (req, res) => {
+  //세션있으면
+  //res.redirect('/main')
+  //else
+  res.redirect('/login');
+});
+
+// 문자 보내기 ROUTER
+app.use('/api', apiRouter);
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
   error.status = 404;
@@ -40,14 +50,7 @@ app.use((err, req, res, next) => {
   res.send(err);
 });
 
-app.get('/', (req, res) => {
-  //세션있으면
-  //res.redirect('/main')
-  //else
-  //res.redirect('/login');
-  res.send('Main Page');
-});
-
+// 서버실행
 const server = app.listen(app.get('port'), () => {
   console.log('Listening to PORT', app.get('port'));
   console.log('http://localhost:2323');
