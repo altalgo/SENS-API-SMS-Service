@@ -10,6 +10,7 @@ const app = express();
 app.set('port', 2323);
 //세션관리
 const session = require('express-session');
+
 app.use(
   session({
     secret: 'anjdlqfurgkwl?',

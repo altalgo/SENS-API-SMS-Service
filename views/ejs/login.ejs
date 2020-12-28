@@ -53,14 +53,27 @@
         <div id="logo">
             <img src="../img/suapc2020.png">
         </div>
-        <form action="../chkuser" method="post">
+        <form action="../chkuser" method="post" onsubmit="chkval()">
             <div id="login__wrapper">
                 <input type="text" name="id" placeholder="아이디" autocomplete="off">
                 <input type="password" name="pw" placeholder="비밀번호" autocomplete="off">
-                <input type="submit" value="로그인">
+                <input type="submit" value="로그인" style="cursor: pointer;">
             </div>
         </form>
     </div>
+    <script>
+        function chkval(){
+            if(document.getElementsByName('id')[0].value ==""){
+                alert('아이디를 입력해주세요')
+                return false;
+            }else if(document.getElementsByName('pw')[0].value==""){
+                alert('비밀번호를 입력해주세요')
+                return false;
+            }else{
+                document.getElementsByTagName('form')[0].submit();
+            }
+        }
+    </script>
 </body>
 
 </html>
