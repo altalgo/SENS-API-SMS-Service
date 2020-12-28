@@ -4,6 +4,7 @@ const router = express.Router();
 const crypto = require('crypto');
 
 router.post('/send', (req, res) => {
+  console.log('received')
   const timeStamp = Date.now().toString();
   const serviceId = process.env.SERVICE_ID;
   const accessKey = process.env.ACCESS_KEY_ID;
@@ -14,7 +15,7 @@ router.post('/send', (req, res) => {
 
   const headers = {
     'Contenc-type': 'application/json; charset=utf-8',
-    'x-ncp-iam-access-key': accessKey,
+    'x-ncp-iam-access-key': accessKey,  
     'x-ncp-apigw-timestamp': timeStamp,
     'x-ncp-apigw-signature-v2': signature,
   };
