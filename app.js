@@ -4,9 +4,32 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const apiRouter = require('./router/api.js');
 const static = require('serve-static');
+const fs=require('fs');
+const https=require('https');
 dotenv.config();
-
 const app = express();
+// ssl 인증서
+try {
+  try {
+    var option = {
+      cert: fs.readFileSync("./ssl/fullchain1.pem"),
+      key: fs.readFileSync("./ssl/privkey1.pem")
+    }
+    // 서버실행
+    var server = https.createServer(option, app).listen(2323, () => {
+      console.log('server has started');
+  })
+
+  } catch (err) {
+    console.log(err);
+  }
+} catch (err) {
+  console.log(err)
+}
+
+
+
+
 app.set('port', 2323);
 //세션관리
 const session = require('express-session');
@@ -90,8 +113,3 @@ app.use((err, req, res, next) => {
   res.send(err);
 });
 
-// 서버실행
-const server = app.listen(app.get('port'), () => {
-  console.log('Listening to PORT', app.get('port'));
-  console.log('http://localhost:2323');
-});
