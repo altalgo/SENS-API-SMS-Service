@@ -3,13 +3,13 @@ const path = require('path');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const apiRouter = require('./router/api.js');
-var static = require('serve-static');
+const static = require('serve-static');
 dotenv.config();
 
 const app = express();
 app.set('port', 2323);
 //세션관리
-var session = require('express-session');
+const session = require('express-session');
 app.use(session({
   secret: 'anjdlqfurgkwl?',
   resave: false,
