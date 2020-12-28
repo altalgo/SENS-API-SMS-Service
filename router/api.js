@@ -4,7 +4,22 @@ const router = express.Router();
 const crypto = require('crypto');
 
 router.post('/send', (req, res) => {
-  const { numberFrom: from, numberTo: to, formBody: content } = req.body;
+  const {
+    numberFrom: from,
+    numberTo: to,
+    formBody: content,
+    subject,
+  } = req.body;
+  console.log(to);
+  const arr = to.split('\r\n');
+  const messages = arr.map((number) => {
+    return {
+      to: number,
+      subject,
+    };
+  });
+  console.log(messages);
+
   const timeStamp = Date.now().toString();
   const serviceId = process.env.SERVICE_ID;
   const accessKey = process.env.ACCESS_KEY_ID;
@@ -21,12 +36,7 @@ router.post('/send', (req, res) => {
     countryCode: '82',
     from,
     content,
-    messages: [
-      {
-        to,
-        subject: '문자 테스트',
-      },
-    ],
+    messages,
   };
 
   axios({
