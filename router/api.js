@@ -4,7 +4,8 @@ const router = express.Router();
 const crypto = require('crypto');
 
 router.post('/send', (req, res) => {
-  console.log('received')
+  const { sms: to } = req.body;
+  console.log('to', to);
   const timeStamp = Date.now().toString();
   const serviceId = process.env.SERVICE_ID;
   const accessKey = process.env.ACCESS_KEY_ID;
@@ -23,7 +24,7 @@ router.post('/send', (req, res) => {
     content: `안녕하세요`,
     messages: [
       {
-        to: `01023250564`,
+        to,
         subject: 'abcd',
         content: 'abcd',
       },
@@ -40,13 +41,13 @@ router.post('/send', (req, res) => {
     },
     data,
   })
-    .then((res) => {
-      console.log(res);
-      res.json({ succes: true });
+    .then((response) => {
+      console.log(response);
+      res.redirect('/main');
     })
     .catch((err) => {
       console.log(err);
-      res.json({ succes: false });
+      res.send('Error');
     });
 });
 
