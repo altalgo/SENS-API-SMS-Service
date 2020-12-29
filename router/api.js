@@ -32,7 +32,7 @@ router.post('/send', (req, res) => {
     .update(StringtoSign)
     .digest('base64');
   const data = {
-    type: 'SMS',
+    type: 'LMS',
     countryCode: '82',
     from,
     content,

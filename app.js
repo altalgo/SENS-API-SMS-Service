@@ -4,8 +4,8 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const apiRouter = require('./router/api.js');
 const static = require('serve-static');
-const fs=require('fs');
-const https=require('https');
+const fs = require('fs');
+const https = require('https');
 dotenv.config();
 const app = express();
 // ssl 인증서
@@ -18,7 +18,7 @@ try {
     // 서버실행
     var server = https.createServer(option, app).listen(2323, () => {
       console.log('server has started');
-  })
+    })
 
   } catch (err) {
     console.log(err);
@@ -65,8 +65,12 @@ app.use('/main', (req, res) => {
 });
 // 로그인처리
 app.use('/login', (req, res) => {
-  //admin //
-  res.render('ejs/login.ejs');
+  if (req.session.user) {
+    res.redirect('/main');
+  } else {
+    //admin //
+    res.render('ejs/login.ejs');
+  }
 });
 // 로그아웃처리
 app.use('/logout', (req, res) => {
