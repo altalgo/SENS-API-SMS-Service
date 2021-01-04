@@ -10,7 +10,6 @@ router.post('/send', (req, res) => {
     formBody: content,
     subject,
   } = req.body;
-  console.log(to);
   const arr = to.split('\r\n');
   const messages = arr.map((number) => {
     return {
@@ -18,8 +17,6 @@ router.post('/send', (req, res) => {
       subject,
     };
   });
-  console.log(messages);
-
   const timeStamp = Date.now().toString();
   const serviceId = process.env.SERVICE_ID;
   const accessKey = process.env.ACCESS_KEY_ID;
@@ -38,7 +35,7 @@ router.post('/send', (req, res) => {
     content,
     messages,
   };
-
+  console.log(data);
   axios({
     method: 'POST',
     url,
@@ -50,7 +47,7 @@ router.post('/send', (req, res) => {
     data,
   })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       res.redirect('/main');
     })
     .catch((err) => {

@@ -8,27 +8,10 @@ const fs = require('fs');
 const https = require('https');
 dotenv.config();
 const app = express();
-// ssl 인증서
-try {
-  try {
-    var option = {
-      cert: fs.readFileSync("./ssl/fullchain1.pem"),
-      key: fs.readFileSync("./ssl/privkey1.pem")
-    }
-    // 서버실행
-    var server = https.createServer(option, app).listen(2323, () => {
-      console.log('server has started');
-    })
 
-  } catch (err) {
-    console.log(err);
-  }
-} catch (err) {
-  console.log(err)
-}
-
-
-
+var server = app.listen(2323, ()=>{
+  console.log('server has started')
+})
 
 app.set('port', 2323);
 //세션관리
