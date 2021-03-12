@@ -6,8 +6,8 @@ const crypto = require('crypto');
 router.post('/send', (req, res) => {
   const {
     numberFrom: from,
-    numberTo: to,
-    formBody: content.replace(\-\g,''),
+    numberTo: to.replace(/-/g,''),
+    formBody: content,
     subject,
   } = req.body;
   const arr = to.split('\r\n');
