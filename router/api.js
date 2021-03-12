@@ -7,7 +7,7 @@ router.post('/send', (req, res) => {
   const {
     numberFrom: from,
     numberTo: to,
-    formBody: content,
+    formBody: content.replace(\-\g,''),
     subject,
   } = req.body;
   const arr = to.split('\r\n');
