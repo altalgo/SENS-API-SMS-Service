@@ -1,14 +1,12 @@
 const path = require('path');
 const morgan = require('morgan');
-const static = require('serve-static');
-const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
 const app = express();
-const server = app.listen(2323, ()=>{
-  console.log('server has started')
-})
+const server = app.listen(2323, () => {
+  console.log('server has started');
+});
 app.set('port', 2323);
 
 app.use(morgan('dev'));
@@ -23,7 +21,7 @@ app.use('/views', static(path.join(__dirname, '/views')));
 const session = require('express-session');
 app.use(
   session({
-    secret: 'anjdlqfurgkwl?',
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -35,14 +33,13 @@ app.use(function (req, res, next) {
   next();
 });
 
-const apiRouter = require('./router/api.js')
-const userRouter = require('./router/login')
+const apiRouter = require('./router/api.js');
+const userRouter = require('./router/login');
 
 // 로그인 처리 ROUTER
-app.use('/user', userRouter)
+app.use('/user', userRouter);
 // 문자 보내기 ROUTER
-app.use('/api', apiRouter)
-
+app.use('/api', apiRouter);
 
 // 메인 페이지 ROUTER
 app.use('/main', (req, res) => {
@@ -65,7 +62,7 @@ app.get('/', (req, res) => {
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
   error.status = 404;
-  
+
   next(error);
 });
 
@@ -73,4 +70,3 @@ app.use((err, req, res, next) => {
   console.log(err);
   res.send(err);
 });
-

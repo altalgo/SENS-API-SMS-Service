@@ -4,13 +4,8 @@ const router = express.Router();
 const crypto = require('crypto');
 
 router.post('/send', (req, res) => {
-  let {
-    numberFrom: from,
-    numberTo: to,
-    formBody: content,
-    subject,
-  } = req.body;
-  to = to.replace(/-/g, '')
+  let { numberFrom: from, numberTo: to, formBody: content, subject } = req.body;
+  to = to.replace(/-/g, '');
   const arr = to.split('\r\n');
   const messages = arr.map((number) => {
     return {
@@ -36,7 +31,7 @@ router.post('/send', (req, res) => {
     content,
     messages,
   };
-  console.log(data);
+  // console.log(data);
   axios({
     method: 'POST',
     url,
