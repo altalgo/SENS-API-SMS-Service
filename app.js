@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-app.use('/views', static(path.join(__dirname, '/views')));
+app.use('/views', express.static(path.join(__dirname, '/views')));
 
 const session = require('express-session');
 app.use(
