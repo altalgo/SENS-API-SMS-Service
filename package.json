@@ -4,7 +4,6 @@
   "description": "sms service for icpc sinchon",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "author": "ICPC Sinchon",
@@ -16,10 +15,7 @@
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "fs": "0.0.1-security",
-    "morgan": "^1.10.0",
-    "path": "^0.12.7",
-    "serve-static": "^1.14.1"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
