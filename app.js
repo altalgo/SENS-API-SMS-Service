@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const apiRouter = require('./router/api.js');
 const static = require('serve-static');
 const fs = require('fs');
-const https = require('https');
 dotenv.config();
 const app = express();
 
