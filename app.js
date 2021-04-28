@@ -1,16 +1,16 @@
-const express = require('express');
 const path = require('path');
-const dotenv = require('dotenv');
 const morgan = require('morgan');
-const apiRouter = require('./router/api.js');
 const static = require('serve-static');
 const fs = require('fs');
+const dotenv = require('dotenv');
 dotenv.config();
+const express = require('express');
 const app = express();
-
-var server = app.listen(2323, ()=>{
+const server = app.listen(2323, ()=>{
   console.log('server has started')
 })
+
+const apiRouter = require('./router/api.js');
 
 app.set('port', 2323);
 //세션관리
