@@ -54,7 +54,7 @@ app.use('/user', userRouter)
 app.get('/', (req, res) => {
   if (req.session.user) res.redirect('/main');
   else {
-    res.redirect('/login');
+    res.redirect('/user/login');
   }
 });
 
